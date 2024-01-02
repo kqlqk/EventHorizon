@@ -1,4 +1,4 @@
-package tiktok_representation.controller;
+package event_horizon.controller;
 
 
 import org.springframework.stereotype.Controller;

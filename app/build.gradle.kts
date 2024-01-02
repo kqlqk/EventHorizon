@@ -19,5 +19,5 @@ java {
 }
 
 application {
-    mainClass.set("tiktok_representation.Main")
+    mainClass.set("event_horizon.Main")
 }
