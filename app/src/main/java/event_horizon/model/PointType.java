@@ -2,6 +2,7 @@ package event_horizon.model;
 
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.SqlTypes;
+import org.hibernate.type.Type;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ public class PointType implements UserType<Point> {
 
     @Override
     public int getSqlType() {
-        return SqlTypes.POINT;
+        return Types.OTHER;
     }
 
     @Override
@@ -54,6 +55,9 @@ public class PointType implements UserType<Point> {
             throw new SQLException("Invalid point data at position " + position);
         }
 
+        parts[0] = parts[0].replace("(", "");
+        parts[1] = parts[1].replace(")", "");
+
         double x = Double.parseDouble(parts[0]);
         double z = Double.parseDouble(parts[1]);
 
@@ -64,7 +68,7 @@ public class PointType implements UserType<Point> {
     @Override
     public void nullSafeSet(PreparedStatement st, Point value, int index, SharedSessionContractImplementor session) throws SQLException {
         if (value == null) {
-            st.setNull(index, SqlTypes.VARCHAR);
+            st.setNull(index, Types.OTHER);
         }
         else {
             String pointString = value.getX() + "," + value.getZ();

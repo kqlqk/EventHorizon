@@ -13,6 +13,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.1")
     implementation("org.postgresql:postgresql:42.7.1")
     compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 java {
