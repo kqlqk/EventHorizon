@@ -25,3 +25,10 @@ java {
 application {
     mainClass.set("event_horizon.Main")
 }
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+    include("**/*Test.class")
+    include("**/*Tests.class")
+    include("**/*IT.class")
+}
