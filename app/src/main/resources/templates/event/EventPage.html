@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event</title>
+</head>
+
+
+<body>
+<h2 th:text="'Event name: ' + ${event.getName()}"></h2>
+<h3 th:text="'Event desc: ' + ${event.getDescription()}"></h3>
+<br>
+<br>
+<h3 th:text="'Event place: ' + ${event.getPlace()}"></h3>
+<h3 th:text="'Event coordinates (will be integrated map): ' + ${event.getPoint()}"></h3>
+<h3 th:text="'Event time: ' + ${event.getTime()}"></h3>
+
+</body>
+</html>

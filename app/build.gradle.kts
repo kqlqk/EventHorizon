@@ -32,3 +32,7 @@ tasks.named<Test>("test") {
     include("**/*Tests.class")
     include("**/*IT.class")
 }
+
+tasks.compileJava {
+    options.compilerArgs.add("-parameters")
+}
