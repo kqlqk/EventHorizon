@@ -2,12 +2,16 @@ package event_horizon.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
 @Getter
+@Setter
+@NoArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +32,12 @@ public class Customer {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    public Customer(String name, int age, List<Event> ownEvents, String email, String password) {
+        this.name = name;
+        this.age = age;
+        this.ownEvents = ownEvents;
+        this.email = email;
+        this.password = password;
+    }
 }

@@ -24,19 +24,19 @@ public class EventServiceImplIT {
     private EventRepository eventRepository;
 
     @Test
-    public void getEventById_ExistingId_ReturnsEvent() {
+    public void getById_ExistingId_ReturnsEvent() {
         Event event = eventRepository.findById(1L).get();
 
-        Event foundEvent = eventService.getEventById(event.getId());
+        Event foundEvent = eventService.getById(event.getId());
 
         assertNotNull(foundEvent);
         assertEquals(event.getId(), foundEvent.getId());
     }
 
     @Test
-    public void getEventById_NonExistingId_ThrowsException() {
+    public void getById_NonExistingId_ThrowsException() {
         assertThrows(EventNotFoundException.class, () -> {
-            eventService.getEventById(999L);
+            eventService.getById(999L);
         });
     }
 }

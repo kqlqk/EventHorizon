@@ -25,23 +25,23 @@ public class EventServiceImplTest {
 
 
     @Test
-    public void getEventById_ExistingId_ReturnsEvent() {
+    public void getById_ExistingId_ReturnsEvent() {
         Long eventId = 1L;
         Event expectedEvent = new Event();
         expectedEvent.setId(eventId);
         when(eventRepository.findById(eventId)).thenReturn(Optional.of(expectedEvent));
 
-        Event resultEvent = eventService.getEventById(eventId);
+        Event resultEvent = eventService.getById(eventId);
 
         assertNotNull(resultEvent);
         assertEquals(expectedEvent, resultEvent);
     }
 
     @Test
-    public void getEventById_NonExistingId_ThrowsException() {
+    public void getById_NonExistingId_ThrowsException() {
         Long eventId = 2L;
         when(eventRepository.findById(eventId)).thenReturn(Optional.empty());
 
-        assertThrows(EventNotFoundException.class, () -> eventService.getEventById(eventId));
+        assertThrows(EventNotFoundException.class, () -> eventService.getById(eventId));
     }
 }

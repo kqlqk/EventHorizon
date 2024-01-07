@@ -30,11 +30,11 @@ public class EventControllerTest {
     public void getEventPage_ReturnsEventPage() {
         Long eventId = 1L;
         Event mockEvent = new Event();
-        when(eventService.getEventById(eventId)).thenReturn(mockEvent);
+        when(eventService.getById(eventId)).thenReturn(mockEvent);
 
         String viewName = eventController.getEventPage(eventId, model);
 
-        verify(eventService).getEventById(eventId);
+        verify(eventService).getById(eventId);
         verify(model).addAttribute("event", mockEvent);
         assertEquals("event/EventPage", viewName);
     }
@@ -42,7 +42,7 @@ public class EventControllerTest {
     @Test
     public void getEventPage_ThrowsException() {
         Long eventId = 1L;
-        when(eventService.getEventById(eventId)).thenThrow(new EventNotFoundException(eventId));
+        when(eventService.getById(eventId)).thenThrow(new EventNotFoundException(eventId));
 
         assertThrows(EventNotFoundException.class, () -> eventController.getEventPage(eventId, model));
     }
