@@ -22,4 +22,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "creator")
     private List<Event> ownEvents;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 }
