@@ -80,4 +80,15 @@ public class EventServiceImplIT {
             eventService.update(e);
         });
     }
+
+    @Test
+    public void remove_ExistingEventId_DeletesEvent() {
+        Long eventId = 1L;
+        assertTrue(eventRepository.existsById(eventId));
+
+        eventService.remove(eventId);
+
+        assertFalse(eventRepository.existsById(eventId));
+    }
+
 }

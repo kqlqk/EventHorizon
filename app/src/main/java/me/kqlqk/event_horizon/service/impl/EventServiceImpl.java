@@ -51,4 +51,18 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.save(toUpdate);
     }
+
+    @Override
+    public void remove(Long eventId) {
+        eventRepository.deleteById(eventId);
+    }
+
+    private boolean isNull(Object toCheck) {
+        if (toCheck instanceof String) {
+            return ((String) toCheck).isBlank();
+        }
+
+        return toCheck == null;
+    }
+
 }

@@ -158,4 +158,13 @@ public class EventServiceImplTest {
         finalEvent.setPlace("   ");
         assertThrows(EventException.class, () -> eventService.update(finalEvent));
     }
+
+    @Test
+    public void remove_DeletesEvent() {
+        Long eventId = 1L;
+
+        eventService.remove(eventId);
+
+        verify(eventRepository).deleteById(eventId);
+    }
 }
