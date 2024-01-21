@@ -59,4 +59,25 @@ public class EventServiceImplIT {
             eventService.add(eventService.getById(1L));
         });
     }
+
+    @Test
+    public void update_UpdatesEvent() {
+        Event eventToUpdate = eventService.getById(1L);
+        eventToUpdate.setName("New event name");
+
+        eventService.update(eventToUpdate);
+
+        Event updatedEvent = eventRepository.findById(1L).get();
+        assertNotNull(updatedEvent);
+        assertThat(updatedEvent.getName()).isEqualTo(eventToUpdate.getName());
+    }
+
+    @Test
+    public void update_ThrowsException() {
+        assertThrows(EventNotFoundException.class, () -> {
+            Event e = eventService.getById(1L);
+            e.setId(999L);
+            eventService.update(e);
+        });
+    }
 }

@@ -38,4 +38,17 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(e);
     }
 
+    @Override
+    public void update(@NonNull Event toUpdate) {
+        if (!eventRepository.existsById(toUpdate.getId())) {
+            throw new EventNotFoundException(toUpdate.getId());
+        }
+
+        if (isNull(toUpdate.getName()) || isNull(toUpdate.getDescription()) || isNull(toUpdate.getPlace()) ||
+                isNull(toUpdate.getTime()) || isNull(toUpdate.getPoint()) || isNull(toUpdate.getCreator())) {
+            throw new EventException("All fields should not be nullable");
+        }
+
+        eventRepository.save(toUpdate);
+    }
 }

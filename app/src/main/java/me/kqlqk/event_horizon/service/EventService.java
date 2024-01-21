@@ -8,4 +8,8 @@ public interface EventService {
     Event getById(Long id);
 
     void add(Event e);
+
+    void update(Event e);
+
+    void remove(Long eventId);
 }

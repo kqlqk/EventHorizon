@@ -98,4 +98,64 @@ public class EventServiceImplTest {
         event.setPlace("   ");
         assertThrows(EventException.class, () -> eventService.add(event));
     }
+
+    @Test
+    public void update_UpdatesEvent() {
+        Event event = new Event("Test Name", "Test description", "NY",
+                new Point(32.123, 43.3212), LocalDateTime.now(), new Customer());
+        event.setId(1L);
+
+        when(eventRepository.existsById(1L)).thenReturn(true);
+
+        eventService.update(event);
+
+        verify(eventRepository).save(event);
+    }
+
+    @Test
+    public void update_ThrowsException() {
+        when(eventRepository.existsById(1L)).thenReturn(false);
+        Event event = new Event();
+        event.setId(1L);
+        assertThrows(EventNotFoundException.class, () -> eventService.update(event));
+
+        when(eventRepository.existsById(1L)).thenReturn(true);
+
+        Event finalEvent = new Event(null, "Test description", "NY",
+                new Point(32.123, 43.3212), LocalDateTime.now(), new Customer());
+        finalEvent.setId(1L);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setName("Test name");
+        finalEvent.setDescription(null);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setDescription("Test description");
+        finalEvent.setPlace(null);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setPlace("NY");
+        finalEvent.setPoint(null);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setPoint(new Point(32.123, 43.3212));
+        finalEvent.setTime(null);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setTime(LocalDateTime.now());
+        finalEvent.setCreator(null);
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setCreator(new Customer());
+        finalEvent.setName("   ");
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setName("Test Name");
+        finalEvent.setDescription("   ");
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+
+        finalEvent.setDescription("Test description");
+        finalEvent.setPlace("   ");
+        assertThrows(EventException.class, () -> eventService.update(finalEvent));
+    }
 }
