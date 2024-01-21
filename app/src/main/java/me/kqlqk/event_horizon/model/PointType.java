@@ -2,6 +2,7 @@ package me.kqlqk.event_horizon.model;
 
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.usertype.UserType;
+import org.postgresql.util.PGobject;
 
 import java.io.Serializable;
 import java.sql.*;
@@ -69,10 +70,13 @@ public class PointType implements UserType<Point> {
             st.setNull(index, Types.OTHER);
         }
         else {
-            String pointString = value.getX() + "," + value.getZ();
-            st.setString(index, pointString);
+            PGobject pgObject = new PGobject();
+            pgObject.setType("point");
+            pgObject.setValue("(" + value.getX() + "," + value.getZ() + ")");
+            st.setObject(index, pgObject);
         }
     }
+
 
     @Override
     public Point deepCopy(Point value) {
