@@ -1,5 +1,6 @@
 package me.kqlqk.event_horizon.service.impl;
 
+import me.kqlqk.event_horizon.exception.EventExistsException;
 import me.kqlqk.event_horizon.exception.EventNotFoundException;
 import me.kqlqk.event_horizon.model.Event;
 import me.kqlqk.event_horizon.repository.EventRepository;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -37,6 +39,24 @@ public class EventServiceImplIT {
     public void getById_NonExistingId_ThrowsException() {
         assertThrows(EventNotFoundException.class, () -> {
             eventService.getById(999L);
+        });
+    }
+
+    @Test
+    public void add_SavesEvent() {
+        Event newEvent = eventService.getById(1L);
+        newEvent.setId(0L);
+
+        eventService.add(newEvent);
+
+        Event savedEvent = eventRepository.findById(newEvent.getId()).orElse(null);
+        assertNotNull(savedEvent);
+    }
+
+    @Test
+    public void add_ThrowsException() {
+        assertThrows(EventExistsException.class, () -> {
+            eventService.add(eventService.getById(1L));
         });
     }
 }
